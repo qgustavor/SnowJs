@@ -33,7 +33,8 @@
 
         for (var i = 0, len = flakeArray.length; i < len; i++) {
             if (flakeArray[i].y > canvas.height) {
-                flakeArray.splice(i--, 1);  
+                flakeArray.splice(i--, 1);
+                len--;
             } else {
                 update(flakeArray[i]);
             }
