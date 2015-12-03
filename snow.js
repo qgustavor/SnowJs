@@ -59,7 +59,7 @@
 
         var snowGradient = ctx.createRadialGradient(t.x,t.y,0,t.x,t.y,t.radius);
         snowGradient.addColorStop(0, 'rgba(255,225,225,1)');
-        snowGradient.addColorStop(0.5, 'rgba(225,225,225,.9)');
+        snowGradient.addColorStop(0.8, 'rgba(225,225,225,.9)');
         snowGradient.addColorStop(1, 'rgba(225,225,225,0)');
 
         ctx.fillStyle = snowGradient;
