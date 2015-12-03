@@ -31,7 +31,7 @@
             radius: Math.pow(5 * random, 2) / 5
         });
 
-        for (var i = 0, len = flakeArray.length; i < len; o++) {
+        for (var i = 0, len = flakeArray.length; i < len; i++) {
             if (flakeArray[i].y > canvas.height) {
                 flakeArray.splice(i--, 1);  
             } else {
