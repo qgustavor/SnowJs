@@ -2,10 +2,15 @@
   var canvas = document.createElement('canvas');
   var ctx = canvas.getContext('2d');
 
-  document.body.appendChild(canvas);
+  document.body.insertBefore(canvas, document.body.firstChild);
 
   canvas.style.cssText = 'pointer-events: none; position: fixed; top: 0; left: 0;' +
           'width: 100%; width: 100vw; height: 100%; height: 100vh; z-index: 999999';
+  
+  // Move to background if there are problems:
+  if (canvas.style.pointerEvents !== 'none') {
+    canvas.style.zIndex = 0;
+  }
 
   // Now based on http://js1k.com/2010-xmas/details/879
   
@@ -18,8 +23,8 @@
   })();
 
   // constants and storage for objects that represent snow flake positions
-  var DEPTH = 10,
-      UNITS = 50,
+  var DEPTH = 8,
+      UNITS = 100,
       DELTA = 0.015,
       flakes = [];
 
@@ -39,9 +44,9 @@
   }
   
   (function addFlake() {
-    if (UNITS < 140) {
+    if (UNITS < 200) {
       // add an extra flake each second
-      setTimeout(addFlake, 1e3);
+      setTimeout(addFlake, 100);
     }
     
     var n = {};
