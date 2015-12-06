@@ -24,14 +24,14 @@
 
   // constants and storage for objects that represent snow flake positions
   var DEPTH = 8,
-      UNITS = 100,
+      UNITS = 1,
       DELTA = 0.015,
       flakes = [];
 
   // function to reset a flake object
   function resetFlake(flake) {
     flake.px = flake.x = (Math.random() * width - (width * 0.5)) * DEPTH;
-    flake.py = flake.y = 0;
+    flake.py = flake.y = height;
     flake.deltaX = (Math.random() - 0.1) * width * 0.5;
     flake.z = DEPTH;
     flake.s = Math.random();   // random seed for each snowflake
