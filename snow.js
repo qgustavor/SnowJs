@@ -31,7 +31,7 @@
   // function to reset a flake object
   function resetFlake(flake) {
     flake.px = flake.x = (Math.random() * width - (width * 0.5)) * DEPTH;
-    flake.py = flake.y = ((Math.random() - 0.1) * (height * 0.2)) * DEPTH;
+    flake.py = flake.y = 0;
     flake.z = DEPTH;
     flake.s = Math.random();   // random seed for each snowflake
   }
