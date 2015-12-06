@@ -19,16 +19,16 @@
 
   // constants and storage for objects that represent snow flake positions
   var DEPTH = 10,
-      UNITS = 70,
+      UNITS = 50,
       DELTA = 0.015,
       flakes = [];
 
   // function to reset a flake object
-  function resetFlake(f) {
-    f.px = f.x = (Math.random() * width - (width * 0.5)) * DEPTH;
-    f.py = f.y = (Math.random() * height - (height * 0.2)) * DEPTH;
-    f.z = DEPTH;
-    f.s = Math.random();   // random seed for each snowflake
+  function resetFlake(flake) {
+    flake.px = flake.x = (Math.random() * width - (width * 0.5)) * DEPTH;
+    flake.py = flake.y = ((Math.random() - 0.1) * (height * 0.2)) * DEPTH;
+    flake.z = DEPTH;
+    flake.s = Math.random();   // random seed for each snowflake
   }
 
   // initial flake setup
@@ -39,9 +39,9 @@
   }
   
   (function addFlake() {
-    if (UNITS < 100) {
-      // add an extra flake each 10 seconds
-      setTimeout(addFlake, 10e3);
+    if (UNITS < 140) {
+      // add an extra flake each second
+      setTimeout(addFlake, 1e3);
     }
     
     var n = {};
@@ -62,14 +62,13 @@
     // update all flakes
     for (var i = 0; i < UNITS; i++) {
       var flake = flakes[i],
-          posX = flake.x + Math.sin(flake.z) * 32,
-          nx = posX + width / 2,
-          posY = flake.y / flake.z,
-          ny = posY,
+          // Calculate position:
+          posX = flake.x + Math.sin(flake.z + Math.PI * flake.x) * 32,
+          posY = flake.y - flake.z * height / DEPTH,
           // fog alpha fade in
-          alpha = flake.z > DEPTH - 5 ? (DEPTH - flake.z)/5 : 1,
+          alpha = flake.z > DEPTH - 5 ? (DEPTH - flake.z) / 5 : 1,
           // start radius of LOD snowflake
-          radius = DEPTH - flake.z - 4;
+          radius = Math.sin(flake.z * Math.PI / DEPTH) * (DEPTH - 4);
       
       // fade in (fog effect) using alpha value
       ctx.fillStyle = "hsla(0,0%,90%," + alpha + ")";
@@ -77,13 +76,16 @@
       
       // LOD snowflake graphic
       ctx.save();
-      ctx.translate(nx, ny);
+      ctx.translate(posX + width / 2, posY);
     
       // randomize the initial snowflake rotation a bit
-      ctx.rotate(flake.s * (i%2 ? 1 : -1) * ((i%3)/2 + 0.1));
+      ctx.rotate(flake.s * (i % 2 ? 1 : -1) * ((i%3)/2 + 0.1));
       
       // render basic star style snowflake
-      for (var m=0,g=radius/(i%4+2),h=radius/(i%3+1); m<6; m++) {
+      for (var m = 0, g, h; m < 6; m++) {
+        g = radius/(i % 4 + 2);
+        h = radius/(i % 3 + 1);
+        
         ctx.lineTo(-g, h);
         ctx.lineTo(0, radius);
         ctx.lineTo(g, h);
@@ -94,14 +96,15 @@
       
       // render spikes on each spoke
       if (i % 2 == 0) {
-        for (var s = 0, g = radius / (i % 5 + 1); s < 6; s++) {
-            ctx.beginPath();
-            ctx.moveTo(0, radius);
-            ctx.lineTo(-g, radius-g);
-            ctx.lineTo(0, radius-g);
-            ctx.lineTo(g, radius-g);
-            ctx.fill();
-            ctx.rotate(Math.PI / 3);
+        for (var s = 0; s < 6; s++) {
+          g = radius / (i % 5 + 1);
+          ctx.beginPath();
+          ctx.moveTo(0, radius);
+          ctx.lineTo(-g, radius-g);
+          ctx.lineTo(0, radius-g);
+          ctx.lineTo(g, radius-g);
+          ctx.fill();
+          ctx.rotate(Math.PI / 3);
         }
       }
       
@@ -114,7 +117,7 @@
       flake.s += Math.random() / 5;
       
       // when flake is out of the view field
-      if (flake.z < DELTA || flake.px < -width || flake.px > width || flake.py > height) {
+      if (flake.z < 0 || flake.px < -width || flake.px > width || flake.py > height) {
         // reset flake
         resetFlake(flake);
       }
