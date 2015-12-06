@@ -32,6 +32,7 @@
   function resetFlake(flake) {
     flake.px = flake.x = (Math.random() * width - (width * 0.5)) * DEPTH;
     flake.py = flake.y = 0;
+    flake.deltaX = (Math.random() - 0.1) * width * 0.5;
     flake.z = DEPTH;
     flake.s = Math.random();   // random seed for each snowflake
   }
@@ -68,7 +69,8 @@
     for (var i = 0; i < UNITS; i++) {
       var flake = flakes[i],
           // Calculate position:
-          posX = flake.x + Math.sin(flake.z + Math.PI * flake.x) * 32,
+          posX = flake.x + Math.sin(flake.z + Math.PI * flake.x) * 32 +
+            flake.z * flake.deltaX / DEPTH,
           posY = flake.y - flake.z * height / DEPTH,
           // fog alpha fade in
           alpha = flake.z > DEPTH - 5 ? (DEPTH - flake.z) / 5 : 1,
