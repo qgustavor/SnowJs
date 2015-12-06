@@ -75,7 +75,7 @@
           // fog alpha fade in
           alpha = flake.z > DEPTH - 5 ? (DEPTH - flake.z) / 5 : 1,
           // start radius of LOD snowflake
-          radius = Math.sin(flake.z * Math.PI / DEPTH) * (DEPTH - 4);
+          radius = (0.9 + 0.2 * Math.sin(flake.z * Math.PI / DEPTH)) * (DEPTH - 4);
       
       // fade in (fog effect) using alpha value
       ctx.fillStyle = "hsla(0,0%,90%," + alpha + ")";
