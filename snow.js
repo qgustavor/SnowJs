@@ -28,11 +28,11 @@
 
   // function to reset a flake object
   function resetFlake(flake) {
-    flake.r = (Math.random() * 0.5 + 0.5) * 7;
+    flake.r = Math.random() * 5 + 2;
     flake.s = Math.random();
     flake.x = Math.random() * width;
     flake.y = -flake.r * 2;
-    flake.vx = Math.random() - 0.5;
+    flake.vx = Math.random() - 0.45;
     flake.vy = Math.random() + 0.1;
     flake.l = 0;
     return flake;
@@ -64,7 +64,7 @@
       
       // fade in (fog effect) using alpha value
       ctx.fillStyle = "hsla(0,0%,90%," + (
-        (Math.sin(flake.l / 90 + flake.r) / 4 + 0.3)
+        (Math.sin(flake.l / 90 + flake.r) * 0.3 + 0.5) // from 0.2 to 0.8
       ) + ")";
       ctx.beginPath();
       
