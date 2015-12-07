@@ -7,7 +7,7 @@
   canvas.style.cssText = 'pointer-events: none; position: fixed; top: 0; left: 0;' +
           'width: 100%; width: 100vw; height: 100%; height: 100vh; z-index: 999999';
   
-  // Move to background if there are problems:
+  // Move to background if is not possible to ignore mouse:
   if (canvas.style.pointerEvents !== 'none') {
     canvas.style.zIndex = 0;
   }
@@ -28,7 +28,7 @@
 
   // function to reset a flake object
   function resetFlake(flake) {
-    flake.r = (Math.random() * 0.5 + 0.5) * 10;
+    flake.r = (Math.random() * 0.5 + 0.5) * 7;
     flake.s = Math.random();
     flake.x = Math.random() * width;
     flake.y = -flake.r * 2;
@@ -64,7 +64,7 @@
       
       // fade in (fog effect) using alpha value
       ctx.fillStyle = "hsla(0,0%,90%," + (
-        (Math.sin(flake.l / 90 + flake.r) / 4 + 0.5)
+        (Math.sin(flake.l / 90 + flake.r) / 4 + 0.3)
       ) + ")";
       ctx.beginPath();
       
